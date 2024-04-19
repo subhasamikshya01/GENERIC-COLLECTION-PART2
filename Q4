@@ -1,0 +1,117 @@
+import java.util.LinkedList;
+import java.util.Scanner;
+
+class Student {
+    private String name;
+    private int age;
+    private double mark;
+
+    public Student(String name, int age, double mark) {
+        this.name = name;
+        this.age = age;
+        this.mark = mark;
+    }
+
+    // Getter and setter methods
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public double getMark() {
+        return mark;
+    }
+
+    public void setMark(double mark) {
+        this.mark = mark;
+    }
+
+    // Override equals method
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Student student = (Student) obj;
+        return age == student.age &&
+                Double.compare(student.mark, mark) == 0 &&
+                name.equals(student.name);
+    }
+}
+
+class LinkedListStudent {
+    private LinkedList<Student> studentList;
+
+    public LinkedListStudent() {
+        studentList = new LinkedList<>();
+    }
+
+    public void addStudent(Student student) {
+        studentList.add(student);
+    }
+
+    public void displayList() {
+        for (Student student : studentList) {
+            System.out.println("Name: " + student.getName() + ", Age: " + student.getAge() + ", Mark: " + student.getMark());
+        }
+    }
+
+    public boolean containsStudent(Student student) {
+        return studentList.contains(student);
+    }
+
+    public void removeStudent(Student student) {
+        studentList.remove(student);
+    }
+
+    public int countStudents() {
+        return studentList.size();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LinkedListStudent linkedListStudent = new LinkedListStudent();
+
+        // Adding some student objects
+        linkedListStudent.addStudent(new Student("John", 20, 85.5));
+        linkedListStudent.addStudent(new Student("Alice", 22, 90.0));
+        linkedListStudent.addStudent(new Student("Bob", 21, 78.3));
+
+        // (a) Display the list
+        System.out.println("Student List:");
+        linkedListStudent.displayList();
+
+        // (b) Check existence of a student object
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nEnter a student details to check its existence (name age mark):");
+        String name = scanner.next();
+        int age = scanner.nextInt();
+        double mark = scanner.nextDouble();
+        Student searchStudent = new Student(name, age, mark);
+        boolean contains = linkedListStudent.containsStudent(searchStudent);
+        System.out.println("Student exists in the list: " + contains);
+
+        // (c) Remove a specified student object
+        System.out.println("\nEnter a student details to remove (name age mark):");
+        name = scanner.next();
+        age = scanner.nextInt();
+        mark = scanner.nextDouble();
+        Student removeStudent = new Student(name, age, mark);
+        linkedListStudent.removeStudent(removeStudent);
+        System.out.println("Student removed successfully.");
+
+        // (d) Count the number of objects present in the list
+        System.out.println("\nNumber of students in the list: " + linkedListStudent.countStudents());
+    }
+}
